@@ -140,6 +140,60 @@
             margin-top: 20px;
         }
     </style>
+    
+    <style>
+        /* Loading animation */
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255, 255, 255, 0.9);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            display: none;
+        }
+        
+        .loading-spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid #f3f3f3;
+            border-top: 5px solid #3498db;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .loading-text {
+            margin-top: 20px;
+            font-size: 18px;
+            color: #333;
+        }
+        
+        /* Download button styles */
+        .download-btn {
+            display: inline-block;
+            padding: 6px 12px;
+            background-color: #27ae60;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            font-size: 12px;
+            margin-top: 8px;
+            transition: background-color 0.3s;
+        }
+        
+        .download-btn:hover {
+            background-color: #229954;
+        }
+    </style>
 </head>
 <body>
     <div class="container">
@@ -156,14 +210,17 @@
                 <div class="pdf-item" onclick="viewPdf('zn/乙肝.pdf', '慢性乙型肝炎防治指南(2022年版)')">
                     <h3>慢性乙型肝炎防治指南(2022年版)</h3>
                     <p>点击查看PDF文件内容</p>
+                    <a href="#" class="download-btn" onclick="event.stopPropagation(); downloadPdf('zn/乙肝.pdf', '慢性乙型肝炎防治指南.pdf')">下载PDF</a>
                 </div>
                 <div class="pdf-item" onclick="viewPdf('zn/结.pdf', '2023结直肠癌诊疗指南')">
                     <h3>2023结直肠癌诊疗指南</h3>
                     <p>点击查看PDF文件内容</p>
+                    <a href="#" class="download-btn" onclick="event.stopPropagation(); downloadPdf('zn/结.pdf', '2023结直肠癌诊疗指南.pdf')">下载PDF</a>
                 </div>
                 <div class="pdf-item" onclick="viewPdf('zn/肝癌指南.pdf', '2024肝癌指南')">
                     <h3>2024肝癌指南</h3>
                     <p>点击查看PDF文件内容</p>
+                    <a href="#" class="download-btn" onclick="event.stopPropagation(); downloadPdf('zn/肝癌指南.pdf', '2024肝癌指南.pdf')">下载PDF</a>
                 </div>
             </section>
             
@@ -181,9 +238,27 @@
     
     <script>
         function viewPdf(pdfPath, title) {
-            document.getElementById('pdfFrame').src = pdfPath;
+            // Show loading animation
+            const loadingOverlay = document.getElementById('loadingOverlay');
+            loadingOverlay.style.display = 'flex';
+            
             document.getElementById('pdfTitle').textContent = title;
             document.getElementById('pdfViewer').classList.add('active');
+            
+            // Set PDF source and handle loading events
+            const pdfFrame = document.getElementById('pdfFrame');
+            pdfFrame.onload = function() {
+                // Hide loading animation when PDF is loaded
+                loadingOverlay.style.display = 'none';
+            };
+            
+            pdfFrame.onerror = function() {
+                // Hide loading animation on error
+                loadingOverlay.style.display = 'none';
+                alert('PDF文件加载失败，请重试');
+            };
+            
+            pdfFrame.src = pdfPath;
             
             // Scroll to the PDF viewer
             document.getElementById('pdfViewer').scrollIntoView({ behavior: 'smooth' });
@@ -193,6 +268,24 @@
             document.getElementById('pdfViewer').classList.remove('active');
             document.getElementById('pdfFrame').src = '';
         }
+        
+        function downloadPdf(pdfPath, fileName) {
+            // Create a temporary link for downloading
+            const link = document.createElement('a');
+            link.href = pdfPath;
+            link.download = fileName || pdfPath.split('/').pop();
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
     </script>
+    
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div>
+            <div class="loading-spinner"></div>
+            <div class="loading-text">正在加载PDF文件...</div>
+        </div>
+    </div>
 </body>
 </html>
