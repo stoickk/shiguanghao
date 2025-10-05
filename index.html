@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>时光号 - 欢迎您的到来</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Microsoft YaHei', sans-serif;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        header {
+            text-align: center;
+            padding: 40px 0;
+        }
+
+        h1 {
+            font-size: 2.5em;
+            color: #2c3e50;
+            margin-bottom: 20px;
+        }
+
+        .content {
+            flex: 1;
+            padding: 20px 0;
+        }
+
+        .nav-link {
+            display: inline-block;
+            margin: 20px 0;
+            padding: 10px 20px;
+            background-color: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+
+        .nav-link:hover {
+            background-color: #2980b9;
+        }
+
+        .intro {
+            background-color: #f9f9f9;
+            padding: 30px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px 0;
+            background-color: #f5f5f5;
+            color: #666;
+            font-size: 14px;
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .feature-card {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>时光号</h1>
+            <p>让回忆更有温度</p>
+        </header>
+
+        <main class="content">
+            <section class="intro">
+                <h2>关于时光号</h2>
+                <p>时光号是一个致力于为用户提供独特社交体验的平台。在这里，每一刻都值得被记录，每一个故事都值得被分享。</p>
+            </section>
+
+            <a href="pdf-list.html" class="nav-link">查看PDF文件列表</a>
+
+            <div class="features">
+                <div class="feature-card">
+                    <h3>记录精彩时刻</h3>
+                    <p>随时随地记录生活中的精彩瞬间，让美好永远保存。</p>
+                </div>
+                <div class="feature-card">
+                    <h3>分享生活故事</h3>
+                    <p>与志同道合的朋友分享你的故事，发现更多精彩。</p>
+                </div>
+                <div class="feature-card">
+                    <h3>连接美好回忆</h3>
+                    <p>让每一段回忆都成为珍贵的时光印记。</p>
+                </div>
+            </div>
+        </main>
+
+        <footer>
+            <p>Copyright © 2025 时光号 All Rights Reserved</p>
+            <a href="https://beian.miit.gov.cn/" target="_blank">闽ICP备2025086672号</a>
+        </footer>
+    </div>
+</body>
+</html> 
