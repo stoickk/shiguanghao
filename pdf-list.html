@@ -275,13 +275,51 @@
         }
         
         function downloadPdf(pdfPath, fileName) {
-            // Create a temporary link for downloading
-            const link = document.createElement('a');
-            link.href = pdfPath;
-            link.download = fileName || pdfPath.split('/').pop();
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
+            // Show loading animation
+            const loadingOverlay = document.getElementById('loadingOverlay');
+            const loadingText = document.querySelector('.loading-text');
+            loadingText.textContent = '正在下载PDF文件...';
+            loadingOverlay.style.display = 'flex';
+            
+            // Use fetch to get the PDF as a blob
+            fetch(pdfPath)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('PDF文件下载失败');
+                    }
+                    return response.blob();
+                })
+                .then(blob => {
+                    // Create a blob URL
+                    const url = window.URL.createObjectURL(blob);
+                    
+                    // Create a temporary link for downloading
+                    const link = document.createElement('a');
+                    link.href = url;
+                    link.download = fileName || pdfPath.split('/').pop();
+                    link.style.display = 'none';
+                    document.body.appendChild(link);
+                    link.click();
+                    
+                    // Clean up
+                    document.body.removeChild(link);
+                    window.URL.revokeObjectURL(url);
+                    
+                    // Hide loading animation
+                    loadingOverlay.style.display = 'none';
+                    loadingText.textContent = '正在加载PDF文件...';
+                })
+                .catch(error => {
+                    console.error('Download error:', error);
+                    alert('PDF文件下载失败，请重试或直接在PDF查看器中保存');
+                    
+                    // Hide loading animation
+                    loadingOverlay.style.display = 'none';
+                    loadingText.textContent = '正在加载PDF文件...';
+                    
+                    // Fallback: open PDF in new window
+                    window.open(pdfPath, '_blank');
+                });
         }
     </script>
     
